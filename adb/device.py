@@ -12,9 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from adb.command import AdbCommand
+
 
 class AdbDevice(object):
-
     def __init__(self, serial_no, adb_path):
         self.serial_no = serial_no
         self.adb_path = adb_path
+        self.commander = AdbCommand(adb_path)
+
+    def get_serialno(self):
+        return self.serial_no
+
+    def cat(self, path):
+        if path is not None:
+            return self.commander.shell("cat", path)
+        return None

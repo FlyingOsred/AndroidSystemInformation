@@ -17,6 +17,7 @@ import os
 from adb import device_manager
 from adb.device_manager import NoDeviceError
 from adb.device_manager import MultipleDeviceError
+from adb.device import AdbDevice
 
 if __name__ == "__main__":
     print('Adb tests begin ...')
@@ -25,7 +26,10 @@ if __name__ == "__main__":
     bin_path = os.path.join(root, "bin")
     print("Current working dir is %s" % bin_path)
     try:
-        device_manager.get_device(bin_path)
+        device = device_manager.get_device(bin_path)
+        print("Device [%s] found" % device.get_serialno())
+        output = device.cat("/proc/meminfo")
+        print("Ouput is %s" % output)
     except NoDeviceError:
         print("No device found")
     except MultipleDeviceError:
